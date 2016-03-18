@@ -5724,6 +5724,13 @@ public final class Settings {
         public static final String VIBRATE_ON_DISCONNECT = "vibrate_on_disconnect";
 
         /**
+         * Whether volume button music control is enabled
+         * @hide
+         */
+        @Readable
+        public static final String VOLUME_BUTTON_MUSIC_CONTROL = "volume_button_music_control";
+
+        /**
          * IMPORTANT: If you add a new public settings you also have to add it to
          * PUBLIC_SETTINGS below. If the new setting is hidden you have to add
          * it to PRIVATE_SETTINGS below. Also add a validator that can validate
