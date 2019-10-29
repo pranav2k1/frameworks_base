@@ -158,6 +158,7 @@ import com.android.server.people.PeopleService;
 import com.android.server.pm.ApexManager;
 import com.android.server.pm.ApexSystemServiceInfo;
 import com.android.server.pocket.PocketService;
+import com.android.server.pocket.PocketBridgeService;
 import com.android.server.pm.CrossProfileAppsService;
 import com.android.server.pm.DataLoaderManagerService;
 import com.android.server.pm.DynamicCodeLoggingService;
@@ -2548,6 +2549,12 @@ public final class SystemServer implements Dumpable {
             mSystemServiceManager.startService(MediaMetricsManagerService.class);
             t.traceEnd();
 
+            if (!context.getResources().getString(
+                    com.android.internal.R.string.config_pocketBridgeSysfsInpocket).isEmpty()) {
+                t.traceBegin("StartPocketBridgeService");
+                mSystemServiceManager.startService(PocketBridgeService.class);
+                t.traceEnd();
+            }
             // LineageHardware
             if (!mOnlyCore){
                 t.traceBegin("StartLineageHardwareService");
