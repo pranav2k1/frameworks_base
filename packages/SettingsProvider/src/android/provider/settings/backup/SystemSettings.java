@@ -96,5 +96,6 @@ public class SystemSettings {
         Settings.System.BATTERY_LIGHT_FULL_COLOR,
         Settings.System.BATTERY_LIGHT_REALLYFULL_COLOR,
         Settings.System.VOLUME_BUTTON_MUSIC_CONTROL,
+        Settings.System.FLASHLIGHT_ON_CALL,
     };
 }
