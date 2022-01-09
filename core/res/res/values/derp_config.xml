@@ -184,4 +184,7 @@
   <!-- Default value for Horizon light color (Blue) -->
   <integer name="config_AmbientPulseLightColor">0x3980FF</integer>
 
+    <!-- Whether to force enable multi resolution configuration for camera -->
+    <bool name="config_forceMultiResolution">false</bool>
+
 </resources>
