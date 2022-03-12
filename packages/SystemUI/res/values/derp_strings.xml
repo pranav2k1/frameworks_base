@@ -105,6 +105,9 @@
     <!-- Name of the VoLTE/VoWiFi icon. -->
     <string name="status_bar_ims">VoLTE/VoWiFi</string>
 
+    <!-- Name of the call strength icon. -->
+    <string name="status_bar_call_strength">Call strength</string>
+
     <!-- Poweroff/Reboot/Recovery QS tile -->
     <string name="quick_settings_poweroff_label">Power off</string>
     <string name="quick_settings_reboot_label">Reboot</string>
