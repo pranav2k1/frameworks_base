@@ -5852,12 +5852,6 @@ public final class Settings {
         public static final String FLASHLIGHT_ON_CALL_RATE = "flashlight_on_call_rate";
 
         /**
-         * Whether to show the battery info on the lockscreen while charging
-         * @hide
-         */
-        public static final String LOCKSCREEN_BATTERY_INFO = "lockscreen_battery_info";
-
-        /**
          * Wheter to show network traffic indicator in statusbar
          * @hide
          */
