@@ -17,7 +17,6 @@
 package com.android.server;
 
 import static com.android.internal.logging.nano.MetricsProto.MetricsEvent;
-import static com.android.internal.util.derp.FileUtils.readOneLine;
 import static com.android.server.health.Utils.copyV1Battery;
 
 import android.annotation.Nullable;
@@ -167,10 +166,6 @@ public final class BatteryService extends SystemService {
 
     private boolean mBatteryLevelLow;
 
-    private final String mFastChargeNode;
-    private boolean mDashCharger;
-    private boolean mLastDashCharger;
-
     private long mDischargeStartTime;
     private int mDischargeStartLevel;
 
@@ -242,7 +237,6 @@ public final class BatteryService extends SystemService {
         }
 
         mBatteryInputSuspended = PowerProperties.battery_input_suspended().orElse(false);
-        mFastChargeNode = mContext.getString(com.android.internal.R.string.config_fastChargeSysfsNode);
     }
 
     @Override
@@ -590,9 +584,7 @@ public final class BatteryService extends SystemService {
                         || mHealthInfo.maxChargingCurrentMicroamps != mLastMaxChargingCurrent
                         || mHealthInfo.maxChargingVoltageMicrovolts != mLastMaxChargingVoltage
                         || mHealthInfo.batteryChargeCounterUah != mLastChargeCounter
-                        || mInvalidCharger != mLastInvalidCharger
-                        || mDashCharger != mLastDashCharger)) {
-        mDashCharger = isDashCharger();
+                        || mInvalidCharger != mLastInvalidCharger)) {
 
             if (mPlugType != mLastPlugType) {
                 if (mLastPlugType == BATTERY_PLUGGED_NONE) {
@@ -766,7 +758,6 @@ public final class BatteryService extends SystemService {
             mLastChargeCounter = mHealthInfo.batteryChargeCounterUah;
             mLastBatteryLevelCritical = mBatteryLevelCritical;
             mLastInvalidCharger = mInvalidCharger;
-            mLastDashCharger = mDashCharger;
         }
     }
 
@@ -798,7 +789,6 @@ public final class BatteryService extends SystemService {
                 BatteryManager.EXTRA_MAX_CHARGING_VOLTAGE,
                 mHealthInfo.maxChargingVoltageMicrovolts);
         intent.putExtra(BatteryManager.EXTRA_CHARGE_COUNTER, mHealthInfo.batteryChargeCounterUah);
-        intent.putExtra(BatteryManager.EXTRA_DASH_CHARGER, mDashCharger);
         if (DEBUG) {
             Slog.d(TAG, "Sending ACTION_BATTERY_CHANGED. scale:" + BATTERY_SCALE
                     + ", info:" + mHealthInfo.toString());
@@ -851,10 +841,6 @@ public final class BatteryService extends SystemService {
         mContext.sendBroadcastAsUser(intent, UserHandle.ALL,
                 android.Manifest.permission.BATTERY_STATS);
         mLastBatteryLevelChangedSentMs = SystemClock.elapsedRealtime();
-    }
-
-    private boolean isDashCharger() {
-        return !mFastChargeNode.isEmpty() && "1".equals(readOneLine(mFastChargeNode));
     }
 
     // TODO: Current code doesn't work since "--unplugged" flag in BSS was purposefully removed.
