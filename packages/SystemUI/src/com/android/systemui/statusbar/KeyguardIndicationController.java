@@ -476,7 +476,7 @@ public class KeyguardIndicationController {
         if (mPowerPluggedIn || mEnableBatteryDefender) {
             String powerIndication = computePowerIndication();
             if (DEBUG_CHARGING_SPEED) {
-                powerIndication += ",  " + (mChargingWattage / 1) + " mW";
+                powerIndication += ",  " + (mChargingWattage / 1000) + " mW";
             }
 
             mRotateTextViewController.updateIndication(
@@ -899,7 +899,7 @@ public class KeyguardIndicationController {
         final String percentage = NumberFormat.getPercentInstance().format(mBatteryLevel / 100f);
         String batteryInfo = "\n";
         if (mShowBatteryInfo) {
-            batteryInfo += (mChargingCurrent / 1) + "mA";
+            batteryInfo += (mChargingCurrent / 1000) + "mA";
             batteryInfo += " · " + String.format("%.1f", (mChargingVoltage / 1000000)) + "V";
             batteryInfo += " · " +  mTemperature / 10 + "°C";
         }
